@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Wilds — Web Designer & Developer</title>
+<meta name="description" content="Daniel Wilds — web designer and developer. Selected web projects and original photography made along the way.">
+<meta property="og:title" content="Daniel Wilds — Web Designer & Developer">
+<meta property="og:description" content="Web design and development, plus a collection of original photography.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="one.jpg">
+<meta name="theme-color" content="#070708">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070708'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='%23d4af37' font-family='Georgia,serif'%3EW%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Daniel Wilds",
+  "jobTitle": "Web Designer & Developer",
+  "url": "https://danwilds.com",
+  "email": "000danielwilds@gmail.com",
+  "description": "Web designer and developer who also produces original photography for web and brand projects.",
+  "sameAs": []
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+    --bg:#070708;
+    --surface:#0e0e11;
+    --surface-glass:rgba(18, 18, 22, 0.65);
+    --text:#f5f3ef;
+    --muted:#8e8a83;
+    --accent:#d4af37;
+    --border:rgba(255,255,255,0.07);
+    --border-gold:rgba(212, 175, 55, 0.3);
+    --ease:cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Montserrat',system-ui,sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+}
+
+/* Custom Cursor */
+.cursor-dot{
+    position:fixed;
+    width:6px;height:6px;
+    background:var(--accent);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:100000;
+    transform:translate(-50%,-50%);
+}
+.cursor-outline{
+    position:fixed;
+    width:36px;height:36px;
+    border:1px solid rgba(212, 175, 55, 0.4);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:99999;
+    transform:translate(-50%,-50%);
+    transition:transform 0.15s var(--ease), width 0.3s var(--ease), height 0.3s var(--ease), opacity 0.3s, background 0.3s;
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text);
+}
+.cursor-outline.cursor-view{
+    width:64px;height:64px;
+    background:rgba(7,7,8,0.7);
+    border-color:var(--accent);
+}
+
+/* Preloader */
+.preloader{
+    position:fixed;inset:0;
+    background:#040405;
+    z-index:10000;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity 1s var(--ease), visibility 1s;
+}
+.preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+.preloader-inner{text-align:center}
+.preloader-logo{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.4rem;
+    font-weight:300;
+    letter-spacing:0.2em;
+    margin-bottom:2rem;
+    text-transform:uppercase;
+    color:var(--text);
+}
+.preloader-bar{
+    width:160px;height:1px;
+    background:rgba(255,255,255,0.08);
+    margin:0 auto;
+    position:relative;
+    overflow:hidden;
+}
+.preloader-bar::after{
+    content:'';
+    position:absolute;left:0;top:0;
+    height:100%;width:0;
+    background:var(--accent);
+    animation:load 1.8s var(--ease) forwards;
+}
+@keyframes load{to{width:100%}}
+
+/* Header */
+.header{
+    position:fixed;top:0;left:0;width:100%;
+    z-index:1000;
+    padding:2rem 4rem;
+    display:flex;justify-content:space-between;align-items:center;
+    transition:all 0.5s var(--ease);
+}
+.header.scrolled{
+    background:var(--surface-glass);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:1.2rem 4rem;
+}
+.logo{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem;
+    font-weight:400;
+    letter-spacing:0.12em;
+    color:var(--text);
+    text-decoration:none;
+    text-transform:uppercase;
+}
+.logo span{color:var(--accent);font-style:italic}
+
+.nav{display:flex;gap:3rem}
+.nav a{
+    font-size:0.68rem;
+    font-weight:400;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--muted);
+    text-decoration:none;
+    position:relative;
+    padding:0.4rem 0;
+    transition:color 0.3s;
+}
+.nav a::after{
+    content:'';
+    position:absolute;bottom:0;left:0;
+    width:0;height:1px;
+    background:var(--accent);
+    transition:width 0.4s var(--ease);
+}
+.nav a:hover{color:var(--text)}
+.nav a:hover::after{width:100%}
+
+/* Hero */
+.hero{
+    height:100vh;
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;
+    text-align:center;
+    position:relative;
+    padding:0 2rem;
+    background:radial-gradient(circle at 50% 40%, rgba(212,175,55,0.06) 0%, rgba(7,7,8,1) 70%);
+}
+.hero-subtitle{
+    font-size:0.7rem;
+    letter-spacing:0.45em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:1.5rem;
+    opacity:0;
+    transform:translateY(16px);
+}
+.hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(3.8rem, 10vw, 8.5rem);
+    font-weight:300;
+    letter-spacing:-0.02em;
+    line-height:0.95;
+    margin-bottom:2rem;
+    color:var(--text);
+    opacity:0;
+    transform:translateY(24px);
+}
+.hero p{
+    font-size:1.1rem;
+    color:var(--muted);
+    max-width:480px;
+    font-weight:300;
+    opacity:0;
+    transform:translateY(16px);
+}
+.hero.revealed .hero-subtitle,
+.hero.revealed h1,
+.hero.revealed p{
+    opacity:1;
+    transform:translateY(0);
+    transition:opacity 1s var(--ease), transform 1s var(--ease);
+}
+.hero.revealed .hero-subtitle{transition-delay:0.1s}
+.hero.revealed h1{transition-delay:0.25s}
+.hero.revealed p{transition-delay:0.5s}
+
+/* Sections */
+section{padding:10rem 4rem}
+.section-tag{
+    font-size:0.65rem;
+    letter-spacing:0.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:1.2rem;
+    display:block;
+}
+.section-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.5rem, 5vw, 4rem);
+    font-weight:300;
+    line-height:1.1;
+    margin-bottom:2rem;
+}
+
+/* About Section */
+.about-grid{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1.2fr;
+    gap:6rem;
+    align-items:center;
+}
+.portrait-frame{
+    position:relative;
+    padding:15px;
+    background:rgba(255,255,255,0.02);
+    border:1px solid var(--border);
+}
+.portrait-inner{
+    position:relative;
+    overflow:hidden;
+    aspect-ratio:4/5;
+}
+.portrait-inner img{
+    width:100%;height:100%;
+    object-fit:cover;
+}
+.about-text p{
+    color:var(--muted);
+    font-size:1.05rem;
+    line-height:1.9;
+    margin-bottom:1.8rem;
+}
+
+/* Gallery Section */
+.gallery-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:4rem;
+    border-bottom:1px solid var(--border);
+    padding-bottom:2rem;
+    gap:2rem;
+    flex-wrap:wrap;
+}
+.filter-toggle-wrap{
+    display:flex;
+    align-items:center;
+    gap:0.9rem;
+    padding-bottom:0.3rem;
+}
+.filter-toggle-label{
+    font-size:0.65rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+}
+.filter-toggle{
+    width:42px;height:22px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid var(--border);
+    position:relative;
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+    transition:background 0.3s, border-color 0.3s;
+}
+.filter-toggle-thumb{
+    position:absolute;
+    top:2px;left:2px;
+    width:16px;height:16px;
+    border-radius:50%;
+    background:var(--muted);
+    transition:transform 0.3s var(--ease), background 0.3s;
+}
+.filter-toggle.active{
+    background:rgba(212,175,55,0.15);
+    border-color:var(--border-gold);
+}
+.filter-toggle.active .filter-toggle-thumb{
+    transform:translateX(20px);
+    background:var(--accent);
+}
+.filter-toggle-state{
+    font-size:0.65rem;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--muted);
+    width:22px;
+}
+.filter-style-select{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.4rem;
+    max-width:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-width 0.5s var(--ease), opacity 0.4s var(--ease), margin 0.5s var(--ease);
+}
+.filter-style-select.visible{
+    max-width:520px;
+    opacity:1;
+    margin-left:0.4rem;
+}
+.filter-style-option{
+    background:none;
+    border:1px solid var(--border);
+    color:var(--muted);
+    font-size:0.62rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    padding:0.4rem 0.7rem;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:color 0.3s, border-color 0.3s, background 0.3s;
+}
+.filter-style-option:hover{color:var(--text)}
+.filter-style-option.active{
+    color:var(--accent);
+    border-color:var(--border-gold);
+    background:rgba(212,175,55,0.08);
+}
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:2.5rem;
+}
+.gallery-card{
+    grid-column:span 2;
+    position:relative;
+    cursor:pointer;
+}
+.gallery-card:nth-child(4),
+.gallery-card:nth-child(5),
+.gallery-card:nth-child(24),
+.gallery-card:nth-child(25){
+    grid-column:span 3;
+}
+.gallery-frame{
+    padding:14px;
+    background:rgba(255,255,255,0.02);
+    border:1px solid var(--border);
+    transition:border-color 0.4s, background 0.4s;
+}
+.gallery-card:hover .gallery-frame{
+    border-color:var(--border-gold);
+    background:rgba(212,175,55,0.03);
+}
+.gallery-img-wrap{
+    aspect-ratio:4/5;
+    overflow:hidden;
+    position:relative;
+}
+.gallery-card:nth-child(4) .gallery-img-wrap,
+.gallery-card:nth-child(5) .gallery-img-wrap{
+    aspect-ratio:3/2;
+}
+.gallery-card:nth-child(24) .gallery-img-wrap,
+.gallery-card:nth-child(25) .gallery-img-wrap{
+    aspect-ratio:16/9;
+}
+.gallery-card img{
+    width:100%;height:100%;
+    object-fit:cover;
+    transition:filter 0.7s var(--ease);
+}
+.gallery-img-wrap::after{
+    content:'';
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.4) 100%);
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.7s var(--ease);
+}
+
+/* Fine Art Filter — curated print-style tonal grades, consistent everywhere an image appears */
+body.fine-art-filter .gallery-card img,
+body.fine-art-filter .lightbox-img{
+    filter:grayscale(0.3) contrast(1.1) brightness(0.93) sepia(0.08);
+}
+body[data-fine-art-style="platinum"].fine-art-filter .gallery-card img,
+body[data-fine-art-style="platinum"].fine-art-filter .lightbox-img{
+    filter:sepia(0.35) contrast(0.96) brightness(1.04) saturate(0.65);
+}
+body[data-fine-art-style="silver"].fine-art-filter .gallery-card img,
+body[data-fine-art-style="silver"].fine-art-filter .lightbox-img{
+    filter:grayscale(0.75) contrast(1.16) brightness(0.95) saturate(1.15) hue-rotate(180deg);
+}
+body[data-fine-art-style="noir"].fine-art-filter .gallery-card img,
+body[data-fine-art-style="noir"].fine-art-filter .lightbox-img{
+    filter:grayscale(1) contrast(1.4) brightness(0.82);
+}
+body[data-fine-art-style="cyanotype"].fine-art-filter .gallery-card img,
+body[data-fine-art-style="cyanotype"].fine-art-filter .lightbox-img{
+    filter:grayscale(1) sepia(1) hue-rotate(180deg) saturate(2.6) contrast(1.1) brightness(0.92);
+}
+body[data-fine-art-style="gilt"].fine-art-filter .gallery-card img,
+body[data-fine-art-style="gilt"].fine-art-filter .lightbox-img{
+    filter:grayscale(0.85) sepia(0.6) hue-rotate(-8deg) saturate(1.9) contrast(1.08) brightness(0.96);
+}
+
+body.fine-art-filter .gallery-img-wrap::after,
+body.fine-art-filter .lightbox-img-wrap::after{
+    opacity:1;
+}
+body[data-fine-art-style="noir"].fine-art-filter .gallery-img-wrap::after,
+body[data-fine-art-style="noir"].fine-art-filter .lightbox-img-wrap::after{
+    opacity:1;
+    background:radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+}
+body[data-fine-art-style="platinum"].fine-art-filter .gallery-img-wrap::after,
+body[data-fine-art-style="platinum"].fine-art-filter .lightbox-img-wrap::after{
+    background:radial-gradient(ellipse at center, transparent 55%, rgba(20,14,4,0.28) 100%);
+}
+body[data-fine-art-style="cyanotype"].fine-art-filter .gallery-img-wrap::after,
+body[data-fine-art-style="cyanotype"].fine-art-filter .lightbox-img-wrap::after{
+    background:radial-gradient(ellipse at center, transparent 48%, rgba(6,16,36,0.42) 100%);
+}
+body[data-fine-art-style="gilt"].fine-art-filter .gallery-img-wrap::after,
+body[data-fine-art-style="gilt"].fine-art-filter .lightbox-img-wrap::after{
+    background:radial-gradient(ellipse at center, transparent 50%, rgba(38,26,4,0.35) 100%);
+}
+.gallery-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(to top, rgba(7,7,8,0.9) 0%, transparent 60%);
+    opacity:0;
+    transition:opacity 0.4s;
+    display:flex;flex-direction:column;
+    justify-content:flex-end;
+    padding:2rem;
+}
+.gallery-card:hover .gallery-overlay{opacity:1}
+.card-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.5rem;
+    color:var(--text);
+}
+.card-meta{
+    font-size:0.65rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--accent);
+}
+
+/* Contact */
+.contact-container{
+    max-width:800px;
+    margin:0 auto;
+    text-align:center;
+    background:var(--surface-glass);
+    border:1px solid var(--border);
+    padding:5rem 3rem;
+}
+.contact-email{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.8rem, 4vw, 3rem);
+    color:var(--text);
+    text-decoration:none;
+    display:inline-block;
+    margin:2rem 0;
+}
+
+/* Footer */
+footer{
+    padding:3rem 4rem;
+    border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:0.7rem;
+    color:var(--muted);
+}
+
+/* Standard Lightbox */
+.lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(4, 4, 5, 0.95);
+    z-index:999999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.3s;
+}
+.lightbox.active{
+    opacity:1;
+    pointer-events:all;
+}
+.lightbox-content{
+    position:relative;
+    max-width:90vw;
+    max-height:90vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+.lightbox-img-wrap{
+    position:relative;
+    display:inline-block;
+    max-width:100%;
+    max-height:80vh;
+    line-height:0;
+}
+.lightbox-img-wrap::after{
+    content:'';
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.38) 100%);
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.7s var(--ease);
+}
+.lightbox-img{
+    max-width:100%;
+    max-height:80vh;
+    object-fit:contain;
+    transition:filter 0.7s var(--ease);
+}
+.lightbox-info{
+    margin-top:1.5rem;
+    text-align:center;
+}
+.lightbox-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.8rem;
+}
+.lightbox-meta{
+    font-size:0.7rem;
+    letter-spacing:0.2em;
+    color:var(--accent);
+    text-transform:uppercase;
+}
+.lightbox-close{
+    position:absolute;
+    top:2rem;
+    right:2rem;
+    background:none;
+    border:none;
+    color:var(--text);
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:color 0.3s, transform 0.3s;
+}
+.lightbox-close:hover{color:var(--accent);transform:rotate(90deg)}
+.lightbox-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:var(--text);
+    cursor:pointer;
+    padding:1rem;
+    display:flex;align-items:center;justify-content:center;
+    transition:color 0.3s, transform 0.3s;
+}
+.lightbox-prev:hover{color:var(--accent);transform:translateY(-50%) translateX(-4px)}
+.lightbox-next:hover{color:var(--accent);transform:translateY(-50%) translateX(4px)}
+.lightbox-prev{left:2rem}
+.lightbox-next{right:2rem}
+
+.lightbox-counter{
+    position:absolute;
+    top:2rem;left:2rem;
+    font-size:0.7rem;
+    letter-spacing:0.2em;
+    color:var(--muted);
+}
+
+/* Keyboard accessibility */
+a:focus-visible,
+button:focus-visible,
+.gallery-card:focus-visible{
+    outline:1px solid var(--accent);
+    outline-offset:4px;
+}
+
+/* Mobile nav toggle */
+.nav-toggle{
+    display:none;
+    background:none;border:none;
+    width:28px;height:20px;
+    position:relative;
+    cursor:pointer;
+    z-index:1001;
+}
+.nav-toggle span{
+    position:absolute;left:0;width:100%;height:1px;
+    background:var(--text);
+    transition:transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.nav-toggle span:nth-child(1){top:2px}
+.nav-toggle span:nth-child(2){top:10px}
+.nav-toggle span:nth-child(3){top:18px}
+.nav-toggle.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+.back-to-top{
+    font-size:0.65rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    text-decoration:none;
+    transition:color 0.3s;
+}
+.back-to-top:hover{color:var(--accent)}
+
+/* Scroll progress */
+.scroll-progress{
+    position:fixed;top:0;left:0;
+    height:1px;
+    background:var(--accent);
+    width:0%;
+    z-index:1002;
+}
+
+/* Side section index */
+.section-nav{
+    position:fixed;
+    right:2.5rem;top:50%;
+    transform:translateY(-50%);
+    z-index:900;
+    display:flex;flex-direction:column;
+    align-items:center;
+    gap:1.4rem;
+}
+.section-nav::before{
+    content:'';
+    position:absolute;
+    left:50%;top:-2rem;
+    width:1px;height:calc(100% + 4rem);
+    background:var(--border);
+    z-index:-1;
+    transform:translateX(-50%);
+}
+.section-nav a{
+    width:5px;height:5px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.18);
+    display:block;
+    transition:background 0.3s, transform 0.3s;
+    position:relative;
+}
+.section-nav a::after{
+    content:attr(data-label);
+    position:absolute;
+    right:14px;top:50%;
+    transform:translateY(-50%);
+    font-size:0.6rem;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--muted);
+    white-space:nowrap;
+    opacity:0;
+    transition:opacity 0.3s;
+    pointer-events:none;
+}
+.section-nav a:hover::after{opacity:1}
+.section-nav a.active{background:var(--accent);transform:scale(1.6)}
+
+@media (max-width:1024px){
+    .section-nav{display:none}
+}
+
+@media (max-width:768px){
+    section{padding:5rem 1.5rem}
+    .header{padding:1.2rem 1.5rem}
+    .gallery-grid{grid-template-columns:1fr;gap:1.5rem}
+    .gallery-card,
+    .gallery-card:nth-child(4),
+    .gallery-card:nth-child(5),
+    .gallery-card:nth-child(24),
+    .gallery-card:nth-child(25){grid-column:span 1 !important}
+    .about-grid{grid-template-columns:1fr;gap:3rem}
+    .gallery-header{align-items:flex-start}
+    .filter-toggle-wrap{flex-wrap:wrap}
+    .filter-style-select.visible{max-width:none;width:100%;order:1;margin-left:0;margin-top:0.8rem}
+
+    .nav-toggle{display:block}
+    .nav{
+        display:flex;
+        position:fixed;
+        inset:0;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        gap:2.5rem;
+        background:var(--bg);
+        transform:translateX(100%);
+        transition:transform 0.5s var(--ease);
+        z-index:1000;
+    }
+    .nav.open{transform:translateX(0)}
+    .nav a{font-size:0.9rem}
+}
+
+@media (hover:none), (pointer:coarse){
+    .cursor-dot,.cursor-outline{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+    .cursor-dot,.cursor-outline{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-outline" id="cursorOutline"></div>
+
+<noscript><style>.preloader{display:none} .hero-subtitle,.hero h1,.hero p{opacity:1 !important;transform:none !important}</style></noscript>
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-logo">Daniel Wilds</div>
+        <div class="preloader-bar"></div>
+    </div>
+</div>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+<nav class="section-nav" id="sectionNav" aria-label="Section navigation">
+    <a href="#top" data-label="Home" class="active"></a>
+    <a href="#about" data-label="About"></a>
+    <a href="#work" data-label="Work"></a>
+    <a href="#contact" data-label="Contact"></a>
+</nav>
+
+<header class="header" id="header">
+    <a href="#" class="logo">Daniel Wilds <span>Studio</span></a>
+    <nav class="nav" id="nav">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+
+<section class="hero" id="top">
+    <div class="hero-subtitle">Web Design &amp; Development</div>
+    <h1>Daniel Wilds</h1>
+    <p>Websites built with care, backed by a bit of photography along the way.</p>
+</section>
+
+<section id="about">
+    <div class="about-grid">
+        <div class="portrait-frame">
+            <div class="portrait-inner">
+                <img src="danielwilds.png" alt="Daniel Wilds Portrait">
+            </div>
+        </div>
+        <div class="about-text">
+            <span class="section-tag">About</span>
+            <h2 class="section-title">Code, Design &amp; a Camera</h2>
+            <p>Daniel Wilds is an internet programming and website design specialist, building sites where structure, performance, and visual detail carry equal weight.</p>
+            <p>He also works with a camera to produce original content for the web — imagery made in service of the sites and brands it's built for, not as a separate creative practice.</p>
+        </div>
+    </div>
+</section>
+
+<section id="work">
+    <div class="gallery-header">
+        <div>
+            <span class="section-tag">Photography</span>
+            <h2 class="section-title">A Few Shots I&rsquo;ve Taken</h2>
+        </div>
+        <div class="filter-toggle-wrap">
+            <span class="filter-toggle-label">Photo Style</span>
+            <button class="filter-toggle" id="filterToggle" role="switch" aria-checked="false" aria-label="Toggle photo style filter">
+                <span class="filter-toggle-thumb"></span>
+            </button>
+            <span class="filter-toggle-state" id="filterToggleState">Off</span>
+            <div class="filter-style-select" id="filterStyleSelect">
+                <button class="filter-style-option active" data-style="mono" type="button">Mono</button>
+                <button class="filter-style-option" data-style="platinum" type="button">Platinum</button>
+                <button class="filter-style-option" data-style="silver" type="button">Silver</button>
+                <button class="filter-style-option" data-style="noir" type="button">Noir</button>
+                <button class="filter-style-option" data-style="cyanotype" type="button">Cyanotype</button>
+                <button class="filter-style-option" data-style="gilt" type="button">Gilt</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery-grid">
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Threshold Study" onclick="openLightbox(0)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(0)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="one.jpg" alt="Threshold Study" loading="eager" decoding="async"><div class="gallery-overlay"><div class="card-title">Threshold Study</div><div class="card-meta">01 — Spatial Geometry</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Interior & Evening" onclick="openLightbox(1)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(1)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="two.jpg" alt="Interior & Evening" loading="eager" decoding="async"><div class="gallery-overlay"><div class="card-title">Interior & Evening</div><div class="card-meta">02 — Ambient Light</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Shadow Line" onclick="openLightbox(2)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(2)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="three.jpg" alt="Shadow Line" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Shadow Line</div><div class="card-meta">03 — Architecture</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View After Rain" onclick="openLightbox(3)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(3)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="four.jpg" alt="After Rain" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">After Rain</div><div class="card-meta">04 — Reflection</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Window Light" onclick="openLightbox(4)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(4)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="five.jpg" alt="Window Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Window Light</div><div class="card-meta">05 — Interior Study</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Corridor" onclick="openLightbox(5)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(5)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="six.jpg" alt="Corridor" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Corridor</div><div class="card-meta">06 — Vanishing Point</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Still Life with Chair" onclick="openLightbox(6)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(6)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="seven.jpg" alt="Still Life with Chair" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Still Life with Chair</div><div class="card-meta">07 — Form & Function</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Northern Light" onclick="openLightbox(7)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(7)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eight.jpg" alt="Northern Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Northern Light</div><div class="card-meta">08 — Atmosphere</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Untitled Study II" onclick="openLightbox(8)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(8)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="nine.jpg" alt="Untitled Study II" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Untitled Study II</div><div class="card-meta">09 — Minimal Form</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Empty Room" onclick="openLightbox(9)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(9)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="ten.jpg" alt="Empty Room" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Empty Room</div><div class="card-meta">10 — Spatial Volume</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Passage" onclick="openLightbox(10)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(10)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eleven.jpg" alt="Passage" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Passage</div><div class="card-meta">11 — Light Gradient</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Late Afternoon" onclick="openLightbox(11)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(11)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twelve.jpg" alt="Late Afternoon" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Late Afternoon</div><div class="card-meta">12 — Warm Shadows</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Shadow Line II" onclick="openLightbox(12)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(12)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="thirteen.jpg" alt="Shadow Line II" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Shadow Line II</div><div class="card-meta">13 — Contrast Study</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Facade" onclick="openLightbox(13)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(13)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="fourteen.jpg" alt="Facade" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Facade</div><div class="card-meta">14 — Architectural Structure</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Untitled Study III" onclick="openLightbox(14)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(14)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="fifteen.jpg" alt="Untitled Study III" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Untitled Study III</div><div class="card-meta">15 — Texture</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Quiet Corner" onclick="openLightbox(15)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(15)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="sixteen.jpg" alt="Quiet Corner" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Quiet Corner</div><div class="card-meta">16 — Interior Quietude</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Morning" onclick="openLightbox(16)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(16)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="seventeen.jpg" alt="Morning" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Morning</div><div class="card-meta">17 — Dawn Illumination</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Structure" onclick="openLightbox(17)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(17)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eighteen.jpg" alt="Structure" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Structure</div><div class="card-meta">18 — Concrete Geometry</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Residual Light" onclick="openLightbox(18)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(18)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="nineteen.jpg" alt="Residual Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Residual Light</div><div class="card-meta">19 — Dusk Reflection</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Edge" onclick="openLightbox(19)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(19)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty.jpg" alt="Edge" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Edge</div><div class="card-meta">20 — Boundary & Frame</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Interior II" onclick="openLightbox(20)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(20)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-one.jpg" alt="Interior II" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Interior II</div><div class="card-meta">21 — Soft Shadow</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Untitled Study IV" onclick="openLightbox(21)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(21)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-two.jpg" alt="Untitled Study IV" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Untitled Study IV</div><div class="card-meta">22 — Perspective</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Distant Room" onclick="openLightbox(22)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(22)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-three.jpg" alt="Distant Room" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Distant Room</div><div class="card-meta">23 — Depth & Scale</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Soft Geometry" onclick="openLightbox(23)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(23)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-four.jpg" alt="Soft Geometry" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Soft Geometry</div><div class="card-meta">24 — Curvature</div></div></div>
+        </div>
+        </div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Last Light" onclick="openLightbox(24)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(24)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-five.jpg" alt="Last Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Last Light</div><div class="card-meta">25 — Twilight Horizon</div></div></div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="contact-container">
+        <span class="section-tag">Contact</span>
+        <h2 class="section-title">Let&rsquo;s Build Something</h2>
+        <a href="mailto:000danielwilds@gmail.com" class="contact-email">000danielwilds@gmail.com</a>
+    </div>
+</section>
+
+<footer>
+    <div>© 2026 DAN WILDS. ALL RIGHTS RESERVED.</div>
+    <a href="#" class="back-to-top">Back to top</a>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close image viewer">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.2"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+    </button>
+    <button class="lightbox-btn lightbox-prev" onclick="prevImage()" aria-label="Previous image">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.1"><polyline points="15 5 8 12 15 19"/></svg>
+    </button>
+    <button class="lightbox-btn lightbox-next" onclick="nextImage()" aria-label="Next image">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.1"><polyline points="9 5 16 12 9 19"/></svg>
+    </button>
+    
+    <div class="lightbox-content">
+        <div class="lightbox-img-wrap">
+            <img src="" alt="" id="lightboxImg" class="lightbox-img">
+        </div>
+        <div class="lightbox-info">
+            <div class="lightbox-title" id="lightboxTitle"></div>
+            <div class="lightbox-meta" id="lightboxMeta"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const galleryItems = [
+    { src: 'one.jpg', title: 'Threshold Study', meta: '01 — Spatial Geometry' },
+    { src: 'two.jpg', title: 'Interior & Evening', meta: '02 — Ambient Light' },
+    { src: 'three.jpg', title: 'Shadow Line', meta: '03 — Architecture' },
+    { src: 'four.jpg', title: 'After Rain', meta: '04 — Reflection' },
+    { src: 'five.jpg', title: 'Window Light', meta: '05 — Interior Study' },
+    { src: 'six.jpg', title: 'Corridor', meta: '06 — Vanishing Point' },
+    { src: 'seven.jpg', title: 'Still Life with Chair', meta: '07 — Form & Function' },
+    { src: 'eight.jpg', title: 'Northern Light', meta: '08 — Atmosphere' },
+    { src: 'nine.jpg', title: 'Untitled Study II', meta: '09 — Minimal Form' },
+    { src: 'ten.jpg', title: 'Empty Room', meta: '10 — Spatial Volume' },
+    { src: 'eleven.jpg', title: 'Passage', meta: '11 — Light Gradient' },
+    { src: 'twelve.jpg', title: 'Late Afternoon', meta: '12 — Warm Shadows' },
+    { src: 'thirteen.jpg', title: 'Shadow Line II', meta: '13 — Contrast Study' },
+    { src: 'fourteen.jpg', title: 'Facade', meta: '14 — Architectural Structure' },
+    { src: 'fifteen.jpg', title: 'Untitled Study III', meta: '15 — Texture' },
+    { src: 'sixteen.jpg', title: 'Quiet Corner', meta: '16 — Interior Quietude' },
+    { src: 'seventeen.jpg', title: 'Morning', meta: '17 — Dawn Illumination' },
+    { src: 'eighteen.jpg', title: 'Structure', meta: '18 — Concrete Geometry' },
+    { src: 'nineteen.jpg', title: 'Residual Light', meta: '19 — Dusk Reflection' },
+    { src: 'twenty.jpg', title: 'Edge', meta: '20 — Boundary & Frame' },
+    { src: 'twenty-one.jpg', title: 'Interior II', meta: '21 — Soft Shadow' },
+    { src: 'twenty-two.jpg', title: 'Untitled Study IV', meta: '22 — Perspective' },
+    { src: 'twenty-three.jpg', title: 'Distant Room', meta: '23 — Depth & Scale' },
+    { src: 'twenty-four.jpg', title: 'Soft Geometry', meta: '24 — Curvature' },
+    { src: 'twenty-five.jpg', title: 'Last Light', meta: '25 — Twilight Horizon' }
+];
+
+let currentIdx = 0;
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('preloader').classList.add('done');
+        document.querySelector('.hero').classList.add('revealed');
+    }, 1000);
+});
+
+window.addEventListener('scroll', () => {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 80);
+    const doc = document.documentElement;
+    const scrolled = (doc.scrollTop) / (doc.scrollHeight - doc.clientHeight) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+});
+
+const sectionNavLinks = document.querySelectorAll('.section-nav a');
+const observedSections = ['top','about','work','contact']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            sectionNavLinks.forEach(a => a.classList.remove('active'));
+            const match = document.querySelector(`.section-nav a[href="#${entry.target.id}"]`);
+            if (match) match.classList.add('active');
+        }
+    });
+}, { rootMargin: '-45% 0px -45% 0px' });
+
+observedSections.forEach(sec => sectionObserver.observe(sec));
+
+const dot = document.getElementById('cursorDot');
+const outline = document.getElementById('cursorOutline');
+dot.style.opacity = '0';
+outline.style.opacity = '0';
+
+window.addEventListener('mousemove', (e) => {
+    dot.style.opacity = '1';
+    outline.style.opacity = '1';
+    dot.style.left = `${e.clientX}px`;
+    dot.style.top = `${e.clientY}px`;
+    outline.style.left = `${e.clientX}px`;
+    outline.style.top = `${e.clientY}px`;
+}, { once: false });
+
+// Cursor becomes a "View" cue over gallery works — the one deliberate cursor interaction
+document.querySelectorAll('.gallery-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        outline.classList.add('cursor-view');
+        outline.textContent = 'View';
+    });
+    card.addEventListener('mouseleave', () => {
+        outline.classList.remove('cursor-view');
+        outline.textContent = '';
+    });
+});
+
+// Mobile nav toggle
+const navToggle = document.getElementById('navToggle');
+const navEl = document.getElementById('nav');
+navToggle.addEventListener('click', () => {
+    const isOpen = navEl.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+navEl.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        navEl.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    });
+});
+
+let lastFocused = null;
+
+// Fine Art Filter toggle + style selection
+const filterToggle = document.getElementById('filterToggle');
+const filterToggleState = document.getElementById('filterToggleState');
+const filterStyleSelect = document.getElementById('filterStyleSelect');
+const filterStyleOptions = document.querySelectorAll('.filter-style-option');
+const FINE_ART_FILTER_KEY = 'fineArtFilterEnabled';
+const FINE_ART_STYLE_KEY = 'fineArtFilterStyle';
+
+function applyFineArtFilter(enabled) {
+    document.body.classList.toggle('fine-art-filter', enabled);
+    filterToggle.classList.toggle('active', enabled);
+    filterToggle.setAttribute('aria-checked', String(enabled));
+    filterToggleState.textContent = enabled ? 'On' : 'Off';
+    filterStyleSelect.classList.toggle('visible', enabled);
+}
+
+function applyFineArtStyle(style) {
+    document.body.setAttribute('data-fine-art-style', style);
+    filterStyleOptions.forEach(btn => btn.classList.toggle('active', btn.dataset.style === style));
+}
+
+(function initFineArtFilter() {
+    let savedEnabled = null;
+    let savedStyle = null;
+    try {
+        savedEnabled = localStorage.getItem(FINE_ART_FILTER_KEY);
+        savedStyle = localStorage.getItem(FINE_ART_STYLE_KEY);
+    } catch (e) {}
+    applyFineArtStyle(savedStyle || 'mono');
+    applyFineArtFilter(savedEnabled === 'true');
+})();
+
+filterToggle.addEventListener('click', () => {
+    const enabled = !filterToggle.classList.contains('active');
+    applyFineArtFilter(enabled);
+    try { localStorage.setItem(FINE_ART_FILTER_KEY, String(enabled)); } catch (e) {}
+});
+
+filterStyleOptions.forEach(btn => {
+    btn.addEventListener('click', () => {
+        applyFineArtStyle(btn.dataset.style);
+        try { localStorage.setItem(FINE_ART_STYLE_KEY, btn.dataset.style); } catch (e) {}
+    });
+});
+
+function openLightbox(index) {
+    lastFocused = document.activeElement;
+    currentIdx = index;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.querySelector('.lightbox-close').focus();
+}
+
+function updateLightbox() {
+    const item = galleryItems[currentIdx];
+    document.getElementById('lightboxImg').src = item.src;
+    document.getElementById('lightboxImg').alt = item.title;
+    document.getElementById('lightboxTitle').textContent = item.title;
+    document.getElementById('lightboxMeta').textContent = item.meta;
+    document.getElementById('lightboxCounter').textContent =
+        String(currentIdx + 1).padStart(2, '0') + ' / ' + galleryItems.length;
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = 'auto';
+    if (lastFocused) lastFocused.focus();
+}
+
+function nextImage() {
+    currentIdx = (currentIdx + 1) % galleryItems.length;
+    updateLightbox();
+}
+
+function prevImage() {
+    currentIdx = (currentIdx - 1 + galleryItems.length) % galleryItems.length;
+    updateLightbox();
+}
+
+window.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'Escape') closeLightbox();
+});
+</script>
+</body>
+</html>
