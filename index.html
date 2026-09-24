@@ -10,14 +10,14 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="one.jpg">
 <meta name="theme-color" content="#070708">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070708'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='%23d4af37' font-family='Georgia,serif'%3EW%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070708'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='%23c8a165' font-family='Georgia,serif'%3EW%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Daniel Wilds",
   "jobTitle": "Web Designer & Developer",
-  "url": "https://danwilds.com",
+  "url": "https://w3bmstr.github.io/gallery",
   "email": "000danielwilds@gmail.com",
   "description": "Web designer and developer who also produces original photography for web and brand projects.",
   "sameAs": []
@@ -26,7 +26,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&family=Alex+Brush&display=swap" rel="stylesheet">
 
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -37,9 +37,10 @@
     --surface-glass:rgba(18, 18, 22, 0.65);
     --text:#f5f3ef;
     --muted:#8e8a83;
-    --accent:#d4af37;
+    --accent:#c8a165;
+    --accent-rgb:200,161,101;
     --border:rgba(255,255,255,0.07);
-    --border-gold:rgba(212, 175, 55, 0.3);
+    --border-accent:rgba(var(--accent-rgb), 0.3);
     --ease:cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -67,7 +68,7 @@ body{
 .cursor-outline{
     position:fixed;
     width:36px;height:36px;
-    border:1px solid rgba(212, 175, 55, 0.4);
+    border:1px solid rgba(var(--accent-rgb), 0.4);
     border-radius:50%;
     pointer-events:none;
     z-index:99999;
@@ -93,12 +94,12 @@ body{
 .preloader.done{opacity:0;visibility:hidden;pointer-events:none}
 .preloader-inner{text-align:center}
 .preloader-logo{
-    font-family:'Cormorant Garamond',serif;
-    font-size:2.4rem;
-    font-weight:300;
-    letter-spacing:0.2em;
+    font-family:'Alex Brush',cursive;
+    font-size:3.2rem;
+    font-weight:400;
+    letter-spacing:0;
     margin-bottom:2rem;
-    text-transform:uppercase;
+    text-transform:none;
     color:var(--text);
 }
 .preloader-bar{
@@ -116,6 +117,78 @@ body{
     animation:load 1.8s var(--ease) forwards;
 }
 @keyframes load{to{width:100%}}
+.preloader-percent{
+    margin-top:1rem;
+    font-size:0.7rem;
+    letter-spacing:0.1em;
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+}
+
+/* Grain overlay — texture over the flat black, present on every high-end dark site */
+body::before{
+    content:'';
+    position:fixed;inset:0;
+    z-index:9000;
+    pointer-events:none;
+    opacity:0.035;
+    mix-blend-mode:overlay;
+    background-repeat:repeat;
+    background-size:180px 180px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grainMove 1s steps(6) infinite;
+}
+@keyframes grainMove{
+    0%{background-position:0 0}
+    100%{background-position:180px 180px}
+}
+
+/* Magnetic hover — links pull slightly toward the cursor before you click */
+.magnetic{
+    display:inline-block;
+    transition:transform 0.2s ease-out;
+}
+@media (hover:none), (pointer:coarse){
+    .magnetic{transition:none}
+}
+
+/* Marquee strip */
+.marquee-strip{
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+    padding:1.4rem 0;
+    background:var(--surface);
+}
+.marquee-track{
+    display:flex;
+    width:max-content;
+    animation:marqueeScroll 220s linear infinite;
+}
+.marquee-track span{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:1.6rem;
+    color:var(--muted);
+    white-space:nowrap;
+    padding:0 1.5rem;
+    position:relative;
+}
+.marquee-track span::after{
+    content:'—';
+    position:absolute;
+    right:-0.3rem;
+    color:var(--accent);
+    font-style:normal;
+}
+@keyframes marqueeScroll{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+}
+@media (prefers-reduced-motion:reduce){
+    .marquee-track{animation:none}
+}
 
 /* Header */
 .header{
@@ -133,15 +206,26 @@ body{
     padding:1.2rem 4rem;
 }
 .logo{
-    font-family:'Cormorant Garamond',serif;
-    font-size:1.6rem;
+    font-family:'Alex Brush',cursive;
+    font-size:2.1rem;
     font-weight:400;
-    letter-spacing:0.12em;
+    letter-spacing:0;
     color:var(--text);
     text-decoration:none;
-    text-transform:uppercase;
+    text-transform:none;
+    line-height:1;
 }
-.logo span{color:var(--accent);font-style:italic}
+.logo span{
+    font-family:'Montserrat',sans-serif;
+    font-size:0.6rem;
+    font-style:normal;
+    font-weight:400;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-left:0.5rem;
+    vertical-align:middle;
+}
 
 .nav{display:flex;gap:3rem}
 .nav a{
@@ -173,7 +257,7 @@ body{
     text-align:center;
     position:relative;
     padding:0 2rem;
-    background:radial-gradient(circle at 50% 40%, rgba(212,175,55,0.06) 0%, rgba(7,7,8,1) 70%);
+    background:radial-gradient(circle at 50% 40%, rgba(var(--accent-rgb), 0.06) 0%, rgba(7,7,8,1) 70%);
 }
 .hero-subtitle{
     font-size:0.7rem;
@@ -185,15 +269,26 @@ body{
     transform:translateY(16px);
 }
 .hero h1{
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(3.8rem, 10vw, 8.5rem);
-    font-weight:300;
-    letter-spacing:-0.02em;
-    line-height:0.95;
+    font-family:'Alex Brush',cursive;
+    font-size:clamp(4.2rem, 12vw, 9.5rem);
+    font-weight:400;
+    letter-spacing:0;
+    line-height:1;
     margin-bottom:2rem;
+    background:linear-gradient(100deg, var(--text) 30%, var(--accent) 50%, var(--text) 70%);
+    background-size:220% auto;
+    background-position:0% 50%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
     color:var(--text);
+    animation:heroShimmer 7s ease-in-out infinite;
     opacity:0;
     transform:translateY(24px);
+}
+@keyframes heroShimmer{
+    0%,100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
 }
 .hero p{
     font-size:1.1rem;
@@ -306,8 +401,8 @@ section{padding:10rem 4rem}
     transition:transform 0.3s var(--ease), background 0.3s;
 }
 .filter-toggle.active{
-    background:rgba(212,175,55,0.15);
-    border-color:var(--border-gold);
+    background:rgba(var(--accent-rgb), 0.15);
+    border-color:var(--border-accent);
 }
 .filter-toggle.active .filter-toggle-thumb{
     transform:translateX(20px);
@@ -349,8 +444,8 @@ section{padding:10rem 4rem}
 .filter-style-option:hover{color:var(--text)}
 .filter-style-option.active{
     color:var(--accent);
-    border-color:var(--border-gold);
-    background:rgba(212,175,55,0.08);
+    border-color:var(--border-accent);
+    background:rgba(var(--accent-rgb), 0.08);
 }
 .gallery-grid{
     display:grid;
@@ -375,8 +470,8 @@ section{padding:10rem 4rem}
     transition:border-color 0.4s, background 0.4s;
 }
 .gallery-card:hover .gallery-frame{
-    border-color:var(--border-gold);
-    background:rgba(212,175,55,0.03);
+    border-color:var(--border-accent);
+    background:rgba(var(--accent-rgb), 0.03);
 }
 .gallery-img-wrap{
     aspect-ratio:4/5;
@@ -485,10 +580,13 @@ body[data-fine-art-style="gilt"].fine-art-filter .lightbox-img-wrap::after{
 }
 .contact-email{
     font-family:'Cormorant Garamond',serif;
-    font-size:clamp(1.8rem, 4vw, 3rem);
+    font-size:clamp(1.3rem, 5.5vw, 3rem);
     color:var(--text);
     text-decoration:none;
     display:inline-block;
+    max-width:100%;
+    overflow-wrap:break-word;
+    word-break:break-word;
     margin:2rem 0;
 }
 
@@ -709,6 +807,8 @@ button:focus-visible,
     .filter-style-select.visible{max-width:none;width:100%;order:1;margin-left:0;margin-top:0.8rem}
 
     .nav-toggle{display:block}
+    .contact-container{padding:3rem 1.5rem}
+    footer{padding:2rem 1.5rem;flex-wrap:wrap;gap:1rem;text-align:center;justify-content:center}
     .header.scrolled{
         backdrop-filter:none;
         -webkit-backdrop-filter:none;
@@ -734,7 +834,7 @@ button:focus-visible,
     .nav::before{
         content:'';
         position:absolute;inset:0;
-        background:radial-gradient(ellipse at 20% 30%, rgba(212,175,55,0.06), transparent 60%);
+        background:radial-gradient(ellipse at 20% 30%, rgba(var(--accent-rgb), 0.06), transparent 60%);
         pointer-events:none;
     }
     .nav a{
@@ -764,10 +864,12 @@ button:focus-visible,
         position:absolute;
         bottom:calc(env(safe-area-inset-bottom, 0px) + 3rem);
         left:3rem;
+        right:3rem;
         font-size:0.68rem;
-        letter-spacing:0.15em;
+        letter-spacing:0.03em;
         color:var(--muted);
         opacity:0;
+        word-break:break-all;
         transform:translateY(16px);
         transition:opacity 0.6s var(--ease) 0.56s, transform 0.6s var(--ease) 0.56s;
     }
@@ -794,6 +896,7 @@ button:focus-visible,
     <div class="preloader-inner">
         <div class="preloader-logo">Daniel Wilds</div>
         <div class="preloader-bar"></div>
+        <div class="preloader-percent" id="preloaderPercent">0%</div>
     </div>
 </div>
 
@@ -808,9 +911,9 @@ button:focus-visible,
 <header class="header" id="header">
     <a href="#" class="logo">Daniel Wilds <span>Studio</span></a>
     <nav class="nav" id="nav">
-        <a href="#about" data-index="01">About</a>
-        <a href="#work" data-index="02">Work</a>
-        <a href="#contact" data-index="03">Contact</a>
+        <a href="#about" data-index="01" class="magnetic">About</a>
+        <a href="#work" data-index="02" class="magnetic">Work</a>
+        <a href="#contact" data-index="03" class="magnetic">Contact</a>
         <div class="nav-footer">000danielwilds@gmail.com</div>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
@@ -824,6 +927,10 @@ button:focus-visible,
     <p>Websites built with care, backed by a bit of photography along the way.</p>
 </section>
 
+<div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track"><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span></div>
+</div>
+
 <section id="about">
     <div class="about-grid">
         <div class="portrait-frame">
@@ -833,7 +940,7 @@ button:focus-visible,
         </div>
         <div class="about-text">
             <span class="section-tag">About</span>
-            <h2 class="section-title">Code, Camera &amp; Design</h2>
+            <h2 class="section-title">Code Camera &amp; Design</h2>
             <p>Daniel Wilds is an internet programming and website design specialist, building sites where structure, performance, and visual detail carry equal weight.</p>
             <p>He also works with a camera to produce original content for the web — imagery made in service of the sites and brands it's built for, not as a separate creative practice.</p>
         </div>
@@ -864,104 +971,104 @@ button:focus-visible,
     </div>
 
     <div class="gallery-grid">
-        <div class="gallery-card" role="button" tabindex="0" aria-label="View Threshold Study" onclick="openLightbox(0)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(0)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="one.jpg" alt="Threshold Study" loading="eager" decoding="async"><div class="gallery-overlay"><div class="card-title">Threshold Study</div><div class="card-meta">01 — Spatial Geometry</div></div></div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Doorway" onclick="openLightbox(0)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(0)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="one.jpg" alt="Doorway" loading="eager" decoding="async"><div class="gallery-overlay"><div class="card-title">Doorway</div><div class="card-meta">01</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Interior & Evening" onclick="openLightbox(1)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(1)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="two.jpg" alt="Interior & Evening" loading="eager" decoding="async"><div class="gallery-overlay"><div class="card-title">Interior & Evening</div><div class="card-meta">02 — Ambient Light</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="two.jpg" alt="Interior & Evening" loading="eager" decoding="async"><div class="gallery-overlay"><div class="card-title">Interior & Evening</div><div class="card-meta">02</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Shadow Line" onclick="openLightbox(2)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(2)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="three.jpg" alt="Shadow Line" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Shadow Line</div><div class="card-meta">03 — Architecture</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="three.jpg" alt="Shadow Line" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Shadow Line</div><div class="card-meta">03</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View After Rain" onclick="openLightbox(3)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(3)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="four.jpg" alt="After Rain" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">After Rain</div><div class="card-meta">04 — Reflection</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="four.jpg" alt="After Rain" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">After Rain</div><div class="card-meta">04</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Window Light" onclick="openLightbox(4)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(4)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="five.jpg" alt="Window Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Window Light</div><div class="card-meta">05 — Interior Study</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="five.jpg" alt="Window Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Window Light</div><div class="card-meta">05</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Corridor" onclick="openLightbox(5)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(5)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="six.jpg" alt="Corridor" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Corridor</div><div class="card-meta">06 — Vanishing Point</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="six.jpg" alt="Corridor" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Corridor</div><div class="card-meta">06</div></div></div>
         </div>
         </div>
-        <div class="gallery-card" role="button" tabindex="0" aria-label="View Still Life with Chair" onclick="openLightbox(6)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(6)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="seven.jpg" alt="Still Life with Chair" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Still Life with Chair</div><div class="card-meta">07 — Form & Function</div></div></div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Chair" onclick="openLightbox(6)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(6)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="seven.jpg" alt="Chair" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Chair</div><div class="card-meta">07</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Northern Light" onclick="openLightbox(7)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(7)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eight.jpg" alt="Northern Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Northern Light</div><div class="card-meta">08 — Atmosphere</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eight.jpg" alt="Northern Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Northern Light</div><div class="card-meta">08</div></div></div>
         </div>
         </div>
-        <div class="gallery-card" role="button" tabindex="0" aria-label="View Untitled Study II" onclick="openLightbox(8)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(8)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="nine.jpg" alt="Untitled Study II" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Untitled Study II</div><div class="card-meta">09 — Minimal Form</div></div></div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Photo 09" onclick="openLightbox(8)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(8)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="nine.jpg" alt="Photo 09" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Photo 09</div><div class="card-meta">09</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Empty Room" onclick="openLightbox(9)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(9)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="ten.jpg" alt="Empty Room" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Empty Room</div><div class="card-meta">10 — Spatial Volume</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="ten.jpg" alt="Empty Room" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Empty Room</div><div class="card-meta">10</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Passage" onclick="openLightbox(10)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(10)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eleven.jpg" alt="Passage" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Passage</div><div class="card-meta">11 — Light Gradient</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eleven.jpg" alt="Passage" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Passage</div><div class="card-meta">11</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Late Afternoon" onclick="openLightbox(11)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(11)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twelve.jpg" alt="Late Afternoon" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Late Afternoon</div><div class="card-meta">12 — Warm Shadows</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twelve.jpg" alt="Late Afternoon" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Late Afternoon</div><div class="card-meta">12</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Shadow Line II" onclick="openLightbox(12)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(12)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="thirteen.jpg" alt="Shadow Line II" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Shadow Line II</div><div class="card-meta">13 — Contrast Study</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="thirteen.jpg" alt="Shadow Line II" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Shadow Line II</div><div class="card-meta">13</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Facade" onclick="openLightbox(13)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(13)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="fourteen.jpg" alt="Facade" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Facade</div><div class="card-meta">14 — Architectural Structure</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="fourteen.jpg" alt="Facade" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Facade</div><div class="card-meta">14</div></div></div>
         </div>
         </div>
-        <div class="gallery-card" role="button" tabindex="0" aria-label="View Untitled Study III" onclick="openLightbox(14)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(14)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="fifteen.jpg" alt="Untitled Study III" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Untitled Study III</div><div class="card-meta">15 — Texture</div></div></div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Photo 15" onclick="openLightbox(14)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(14)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="fifteen.jpg" alt="Photo 15" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Photo 15</div><div class="card-meta">15</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Quiet Corner" onclick="openLightbox(15)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(15)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="sixteen.jpg" alt="Quiet Corner" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Quiet Corner</div><div class="card-meta">16 — Interior Quietude</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="sixteen.jpg" alt="Quiet Corner" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Quiet Corner</div><div class="card-meta">16</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Morning" onclick="openLightbox(16)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(16)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="seventeen.jpg" alt="Morning" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Morning</div><div class="card-meta">17 — Dawn Illumination</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="seventeen.jpg" alt="Morning" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Morning</div><div class="card-meta">17</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Structure" onclick="openLightbox(17)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(17)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eighteen.jpg" alt="Structure" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Structure</div><div class="card-meta">18 — Concrete Geometry</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="eighteen.jpg" alt="Structure" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Structure</div><div class="card-meta">18</div></div></div>
         </div>
         </div>
-        <div class="gallery-card" role="button" tabindex="0" aria-label="View Residual Light" onclick="openLightbox(18)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(18)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="nineteen.jpg" alt="Residual Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Residual Light</div><div class="card-meta">19 — Dusk Reflection</div></div></div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Evening Light" onclick="openLightbox(18)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(18)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="nineteen.jpg" alt="Evening Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Evening Light</div><div class="card-meta">19</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Edge" onclick="openLightbox(19)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(19)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty.jpg" alt="Edge" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Edge</div><div class="card-meta">20 — Boundary & Frame</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty.jpg" alt="Edge" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Edge</div><div class="card-meta">20</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Interior II" onclick="openLightbox(20)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(20)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-one.jpg" alt="Interior II" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Interior II</div><div class="card-meta">21 — Soft Shadow</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-one.jpg" alt="Interior II" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Interior II</div><div class="card-meta">21</div></div></div>
         </div>
         </div>
-        <div class="gallery-card" role="button" tabindex="0" aria-label="View Untitled Study IV" onclick="openLightbox(21)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(21)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-two.jpg" alt="Untitled Study IV" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Untitled Study IV</div><div class="card-meta">22 — Perspective</div></div></div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Photo 22" onclick="openLightbox(21)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(21)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-two.jpg" alt="Photo 22" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Photo 22</div><div class="card-meta">22</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Distant Room" onclick="openLightbox(22)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(22)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-three.jpg" alt="Distant Room" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Distant Room</div><div class="card-meta">23 — Depth & Scale</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-three.jpg" alt="Distant Room" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Distant Room</div><div class="card-meta">23</div></div></div>
         </div>
         </div>
-        <div class="gallery-card" role="button" tabindex="0" aria-label="View Soft Geometry" onclick="openLightbox(23)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(23)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-four.jpg" alt="Soft Geometry" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Soft Geometry</div><div class="card-meta">24 — Curvature</div></div></div>
+        <div class="gallery-card" role="button" tabindex="0" aria-label="View Curved Wall" onclick="openLightbox(23)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(23)}">
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-four.jpg" alt="Curved Wall" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Curved Wall</div><div class="card-meta">24</div></div></div>
         </div>
         </div>
         <div class="gallery-card" role="button" tabindex="0" aria-label="View Last Light" onclick="openLightbox(24)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(24)}">
-            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-five.jpg" alt="Last Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Last Light</div><div class="card-meta">25 — Twilight Horizon</div></div></div>
+            <div class="gallery-frame"><div class="gallery-img-wrap"><img src="twenty-five.jpg" alt="Last Light" loading="lazy" decoding="async"><div class="gallery-overlay"><div class="card-title">Last Light</div><div class="card-meta">25</div></div></div>
         </div>
         </div>
     </div>
@@ -971,12 +1078,12 @@ button:focus-visible,
     <div class="contact-container">
         <span class="section-tag">Contact</span>
         <h2 class="section-title">Let&rsquo;s Build Something</h2>
-        <a href="mailto:000danielwilds@gmail.com" class="contact-email">000danielwilds@gmail.com</a>
+        <a href="mailto:000danielwilds@gmail.com" class="contact-email magnetic">000danielwilds@gmail.com</a>
     </div>
 </section>
 
 <footer>
-    <div>© 2026 DAN WILDS. ALL RIGHTS RESERVED.</div>
+    <div>© 2026 DANIEL WILDS. ALL RIGHTS RESERVED.</div>
     <a href="#" class="back-to-top">Back to top</a>
 </footer>
 
@@ -1005,34 +1112,48 @@ button:focus-visible,
 
 <script>
 const galleryItems = [
-    { src: 'one.jpg', title: 'Threshold Study', meta: '01 — Spatial Geometry' },
-    { src: 'two.jpg', title: 'Interior & Evening', meta: '02 — Ambient Light' },
-    { src: 'three.jpg', title: 'Shadow Line', meta: '03 — Architecture' },
-    { src: 'four.jpg', title: 'After Rain', meta: '04 — Reflection' },
-    { src: 'five.jpg', title: 'Window Light', meta: '05 — Interior Study' },
-    { src: 'six.jpg', title: 'Corridor', meta: '06 — Vanishing Point' },
-    { src: 'seven.jpg', title: 'Still Life with Chair', meta: '07 — Form & Function' },
-    { src: 'eight.jpg', title: 'Northern Light', meta: '08 — Atmosphere' },
-    { src: 'nine.jpg', title: 'Untitled Study II', meta: '09 — Minimal Form' },
-    { src: 'ten.jpg', title: 'Empty Room', meta: '10 — Spatial Volume' },
-    { src: 'eleven.jpg', title: 'Passage', meta: '11 — Light Gradient' },
-    { src: 'twelve.jpg', title: 'Late Afternoon', meta: '12 — Warm Shadows' },
-    { src: 'thirteen.jpg', title: 'Shadow Line II', meta: '13 — Contrast Study' },
-    { src: 'fourteen.jpg', title: 'Facade', meta: '14 — Architectural Structure' },
-    { src: 'fifteen.jpg', title: 'Untitled Study III', meta: '15 — Texture' },
-    { src: 'sixteen.jpg', title: 'Quiet Corner', meta: '16 — Interior Quietude' },
-    { src: 'seventeen.jpg', title: 'Morning', meta: '17 — Dawn Illumination' },
-    { src: 'eighteen.jpg', title: 'Structure', meta: '18 — Concrete Geometry' },
-    { src: 'nineteen.jpg', title: 'Residual Light', meta: '19 — Dusk Reflection' },
-    { src: 'twenty.jpg', title: 'Edge', meta: '20 — Boundary & Frame' },
-    { src: 'twenty-one.jpg', title: 'Interior II', meta: '21 — Soft Shadow' },
-    { src: 'twenty-two.jpg', title: 'Untitled Study IV', meta: '22 — Perspective' },
-    { src: 'twenty-three.jpg', title: 'Distant Room', meta: '23 — Depth & Scale' },
-    { src: 'twenty-four.jpg', title: 'Soft Geometry', meta: '24 — Curvature' },
-    { src: 'twenty-five.jpg', title: 'Last Light', meta: '25 — Twilight Horizon' }
+    { src: 'one.jpg', title: 'Doorway', meta: '01' },
+    { src: 'two.jpg', title: 'Interior & Evening', meta: '02' },
+    { src: 'three.jpg', title: 'Shadow Line', meta: '03' },
+    { src: 'four.jpg', title: 'After Rain', meta: '04' },
+    { src: 'five.jpg', title: 'Window Light', meta: '05' },
+    { src: 'six.jpg', title: 'Corridor', meta: '06' },
+    { src: 'seven.jpg', title: 'Chair', meta: '07' },
+    { src: 'eight.jpg', title: 'Northern Light', meta: '08' },
+    { src: 'nine.jpg', title: 'Photo 09', meta: '09' },
+    { src: 'ten.jpg', title: 'Empty Room', meta: '10' },
+    { src: 'eleven.jpg', title: 'Passage', meta: '11' },
+    { src: 'twelve.jpg', title: 'Late Afternoon', meta: '12' },
+    { src: 'thirteen.jpg', title: 'Shadow Line II', meta: '13' },
+    { src: 'fourteen.jpg', title: 'Facade', meta: '14' },
+    { src: 'fifteen.jpg', title: 'Photo 15', meta: '15' },
+    { src: 'sixteen.jpg', title: 'Quiet Corner', meta: '16' },
+    { src: 'seventeen.jpg', title: 'Morning', meta: '17' },
+    { src: 'eighteen.jpg', title: 'Structure', meta: '18' },
+    { src: 'nineteen.jpg', title: 'Evening Light', meta: '19' },
+    { src: 'twenty.jpg', title: 'Edge', meta: '20' },
+    { src: 'twenty-one.jpg', title: 'Interior II', meta: '21' },
+    { src: 'twenty-two.jpg', title: 'Photo 22', meta: '22' },
+    { src: 'twenty-three.jpg', title: 'Distant Room', meta: '23' },
+    { src: 'twenty-four.jpg', title: 'Curved Wall', meta: '24' },
+    { src: 'twenty-five.jpg', title: 'Last Light', meta: '25' }
 ];
 
 let currentIdx = 0;
+
+// Preloader percentage counter — cosmetic, timed to the existing bar animation
+(function runPreloaderCounter() {
+    const percentEl = document.getElementById('preloaderPercent');
+    let pct = 0;
+    const tick = setInterval(() => {
+        pct += Math.ceil(Math.random() * 9) + 3;
+        if (pct >= 100) {
+            pct = 100;
+            clearInterval(tick);
+        }
+        percentEl.textContent = pct + '%';
+    }, 110);
+})();
 
 window.addEventListener('load', () => {
     setTimeout(() => {
@@ -1088,6 +1209,19 @@ document.querySelectorAll('.gallery-card').forEach(card => {
     card.addEventListener('mouseleave', () => {
         outline.classList.remove('cursor-view');
         outline.textContent = '';
+    });
+});
+
+// Magnetic hover on nav links and the contact email
+document.querySelectorAll('.magnetic').forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const relX = e.clientX - rect.left - rect.width / 2;
+        const relY = e.clientY - rect.top - rect.height / 2;
+        el.style.transform = `translate(${relX * 0.25}px, ${relY * 0.3}px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+        el.style.transform = 'translate(0, 0)';
     });
 });
 
