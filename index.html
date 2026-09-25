@@ -326,6 +326,12 @@ section{padding:10rem 4rem}
     line-height:1.1;
     margin-bottom:2rem;
 }
+.gallery-note{
+    margin-top:-1.2rem;
+    font-size:0.8rem;
+    color:var(--muted);
+    max-width:420px;
+}
 
 /* About Section */
 .about-grid{
@@ -425,7 +431,7 @@ section{padding:10rem 4rem}
     transition:max-width 0.5s var(--ease), opacity 0.4s var(--ease), margin 0.5s var(--ease);
 }
 .filter-style-select.visible{
-    max-width:520px;
+    max-width:610px;
     opacity:1;
     margin-left:0.4rem;
 }
@@ -503,19 +509,19 @@ section{padding:10rem 4rem}
 /* Fine Art Filter — curated print-style tonal grades, consistent everywhere an image appears */
 body.fine-art-filter .gallery-card img,
 body.fine-art-filter .lightbox-img{
-    filter:grayscale(0.3) contrast(1.1) brightness(0.93) sepia(0.08);
+    filter:grayscale(0.92) contrast(1.18) brightness(0.95) sepia(0.06);
 }
 body[data-fine-art-style="platinum"].fine-art-filter .gallery-card img,
 body[data-fine-art-style="platinum"].fine-art-filter .lightbox-img{
-    filter:sepia(0.35) contrast(0.96) brightness(1.04) saturate(0.65);
+    filter:sepia(0.42) contrast(0.9) brightness(1.06) saturate(0.55);
 }
 body[data-fine-art-style="silver"].fine-art-filter .gallery-card img,
 body[data-fine-art-style="silver"].fine-art-filter .lightbox-img{
-    filter:grayscale(0.75) contrast(1.16) brightness(0.95) saturate(1.15) hue-rotate(180deg);
+    filter:grayscale(0.88) contrast(1.2) brightness(0.94) saturate(1.5) hue-rotate(180deg);
 }
 body[data-fine-art-style="noir"].fine-art-filter .gallery-card img,
 body[data-fine-art-style="noir"].fine-art-filter .lightbox-img{
-    filter:grayscale(1) contrast(1.4) brightness(0.82);
+    filter:grayscale(1) contrast(1.48) brightness(0.8);
 }
 body[data-fine-art-style="cyanotype"].fine-art-filter .gallery-card img,
 body[data-fine-art-style="cyanotype"].fine-art-filter .lightbox-img{
@@ -523,7 +529,11 @@ body[data-fine-art-style="cyanotype"].fine-art-filter .lightbox-img{
 }
 body[data-fine-art-style="gilt"].fine-art-filter .gallery-card img,
 body[data-fine-art-style="gilt"].fine-art-filter .lightbox-img{
-    filter:grayscale(0.85) sepia(0.6) hue-rotate(-8deg) saturate(1.9) contrast(1.08) brightness(0.96);
+    filter:grayscale(0.85) sepia(0.6) hue-rotate(-8deg) saturate(2.1) contrast(1.1) brightness(0.97);
+}
+body[data-fine-art-style="chrome"].fine-art-filter .gallery-card img,
+body[data-fine-art-style="chrome"].fine-art-filter .lightbox-img{
+    filter:saturate(1.75) contrast(1.22) brightness(1.04) hue-rotate(-2deg);
 }
 
 body.fine-art-filter .gallery-img-wrap::after,
@@ -546,6 +556,10 @@ body[data-fine-art-style="cyanotype"].fine-art-filter .lightbox-img-wrap::after{
 body[data-fine-art-style="gilt"].fine-art-filter .gallery-img-wrap::after,
 body[data-fine-art-style="gilt"].fine-art-filter .lightbox-img-wrap::after{
     background:radial-gradient(ellipse at center, transparent 50%, rgba(38,26,4,0.35) 100%);
+}
+body[data-fine-art-style="chrome"].fine-art-filter .gallery-img-wrap::after,
+body[data-fine-art-style="chrome"].fine-art-filter .lightbox-img-wrap::after{
+    opacity:0;
 }
 .gallery-overlay{
     position:absolute;inset:0;
@@ -671,6 +685,18 @@ footer{
     transition:color 0.3s, transform 0.3s;
 }
 .lightbox-close:hover{color:var(--accent);transform:rotate(90deg)}
+.lightbox-fullscreen{
+    position:absolute;
+    top:2rem;
+    right:5.5rem;
+    background:none;
+    border:none;
+    color:var(--text);
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:color 0.3s;
+}
+.lightbox-fullscreen:hover{color:var(--accent)}
 .lightbox-btn{
     position:absolute;
     top:50%;
@@ -952,6 +978,7 @@ button:focus-visible,
         <div>
             <span class="section-tag">Photography</span>
             <h2 class="section-title">A Few Shots I&rsquo;ve Taken</h2>
+            <p class="gallery-note">All photographs shown unedited. The style presets above are optional and can be toggled on or off.</p>
         </div>
         <div class="filter-toggle-wrap">
             <span class="filter-toggle-label">Photo Style</span>
@@ -966,6 +993,7 @@ button:focus-visible,
                 <button class="filter-style-option" data-style="noir" type="button">Noir</button>
                 <button class="filter-style-option" data-style="cyanotype" type="button">Cyanotype</button>
                 <button class="filter-style-option" data-style="gilt" type="button">Gilt</button>
+                <button class="filter-style-option" data-style="chrome" type="button">Chrome</button>
             </div>
         </div>
     </div>
@@ -1089,6 +1117,11 @@ button:focus-visible,
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
     <div class="lightbox-counter" id="lightboxCounter"></div>
+    <button class="lightbox-btn lightbox-fullscreen" id="lightboxFullscreen" onclick="toggleLightboxFullscreen()" aria-label="Enter fullscreen">
+        <svg id="fullscreenIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.2">
+            <polyline points="4 9 4 4 9 4"/><polyline points="15 4 20 4 20 9"/><polyline points="20 15 20 20 15 20"/><polyline points="9 20 4 20 4 15"/>
+        </svg>
+    </button>
     <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close image viewer">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.2"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
     </button>
@@ -1332,6 +1365,31 @@ window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') nextImage();
     if (e.key === 'ArrowLeft') prevImage();
     if (e.key === 'Escape') closeLightbox();
+});
+
+// Lightbox fullscreen toggle
+const lightboxFullscreenBtn = document.getElementById('lightboxFullscreen');
+const fullscreenIconEl = document.getElementById('fullscreenIcon');
+const ENTER_FS_ICON = '<polyline points="4 9 4 4 9 4"/><polyline points="15 4 20 4 20 9"/><polyline points="20 15 20 20 15 20"/><polyline points="9 20 4 20 4 15"/>';
+const EXIT_FS_ICON = '<polyline points="9 4 9 9 4 9"/><polyline points="20 9 15 9 15 4"/><polyline points="15 20 15 15 20 15"/><polyline points="4 15 9 15 9 20"/>';
+
+if (!document.fullscreenEnabled) {
+    lightboxFullscreenBtn.style.display = 'none';
+}
+
+function toggleLightboxFullscreen() {
+    const lb = document.getElementById('lightbox');
+    if (!document.fullscreenElement) {
+        lb.requestFullscreen().catch(() => {});
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+document.addEventListener('fullscreenchange', () => {
+    const isFs = !!document.fullscreenElement;
+    fullscreenIconEl.innerHTML = isFs ? EXIT_FS_ICON : ENTER_FS_ICON;
+    lightboxFullscreenBtn.setAttribute('aria-label', isFs ? 'Exit fullscreen' : 'Enter fullscreen');
 });
 </script>
 </body>
