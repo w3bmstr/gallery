@@ -186,6 +186,9 @@ body::before{
     from{transform:translateX(0)}
     to{transform:translateX(-50%)}
 }
+.marquee-track.marquee-reverse{
+    animation-direction:reverse;
+}
 @media (prefers-reduced-motion:reduce){
     .marquee-track{animation:none}
 }
@@ -210,10 +213,16 @@ body::before{
     font-size:2.1rem;
     font-weight:400;
     letter-spacing:0;
-    color:var(--text);
     text-decoration:none;
     text-transform:none;
     line-height:1;
+    background:linear-gradient(100deg, var(--text) 20%, var(--accent) 55%, var(--text) 85%);
+    background-size:180% auto;
+    background-position:30% 50%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:var(--text);
 }
 .logo span{
     font-family:'Montserrat',sans-serif;
@@ -222,6 +231,8 @@ body::before{
     font-weight:400;
     letter-spacing:0.3em;
     text-transform:uppercase;
+    background:none;
+    -webkit-text-fill-color:var(--accent);
     color:var(--accent);
     margin-left:0.5rem;
     vertical-align:middle;
@@ -334,6 +345,19 @@ section{padding:10rem 4rem}
 }
 
 /* About Section */
+#about{
+    position:relative;
+    background:var(--bg);
+    overflow:hidden;
+}
+#about::before{
+    content:'';
+    position:absolute;inset:0;
+    z-index:-1;
+    background:radial-gradient(ellipse at 15% 20%, rgba(var(--accent-rgb), 0.08) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 80%, rgba(var(--accent-rgb), 0.05) 0%, transparent 50%);
+    pointer-events:none;
+}
 .about-grid{
     max-width:1200px;
     margin:0 auto;
@@ -495,7 +519,13 @@ section{padding:10rem 4rem}
 .gallery-card img{
     width:100%;height:100%;
     object-fit:cover;
-    transition:filter 0.7s var(--ease);
+    transition:filter 0.7s var(--ease), transform 0.8s var(--ease);
+}
+.gallery-card:hover img{
+    transform:scale(1.06);
+}
+@media (hover:none){
+    .gallery-card:hover img{transform:none}
 }
 .gallery-img-wrap::after{
     content:'';
@@ -606,11 +636,21 @@ body[data-fine-art-style="chrome"].fine-art-filter .lightbox-img-wrap::after{
 
 /* Footer */
 footer{
+    position:relative;
     padding:3rem 4rem;
+    background:var(--bg);
     border-top:1px solid var(--border);
     display:flex;justify-content:space-between;align-items:center;
     font-size:0.7rem;
     color:var(--muted);
+    overflow:hidden;
+}
+footer::before{
+    content:'';
+    position:absolute;inset:0;
+    z-index:-1;
+    background:radial-gradient(ellipse at 50% 0%, rgba(var(--accent-rgb), 0.05) 0%, transparent 60%);
+    pointer-events:none;
 }
 
 /* Standard Lightbox */
@@ -624,7 +664,7 @@ footer{
     justify-content:center;
     opacity:0;
     pointer-events:none;
-    transition:opacity 0.3s;
+    transition:opacity 0.4s var(--ease);
 }
 .lightbox.active{
     opacity:1;
@@ -637,6 +677,11 @@ footer{
     display:flex;
     flex-direction:column;
     align-items:center;
+    transform:scale(0.94);
+    transition:transform 0.4s var(--ease);
+}
+.lightbox.active .lightbox-content{
+    transform:scale(1);
 }
 .lightbox-img-wrap{
     position:relative;
@@ -864,10 +909,11 @@ button:focus-visible,
         pointer-events:none;
     }
     .nav a{
-        font-family:'Cormorant Garamond', serif;
-        font-size:clamp(2.4rem, 11vw, 3.4rem);
-        font-weight:300;
-        letter-spacing:-0.01em;
+        font-family:'Alex Brush', cursive;
+        font-size:clamp(3.2rem, 15vw, 4.6rem);
+        font-weight:400;
+        letter-spacing:0;
+        text-transform:none;
         color:var(--text);
         opacity:0;
         transform:translateY(28px);
@@ -972,6 +1018,10 @@ button:focus-visible,
         </div>
     </div>
 </section>
+
+<div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track marquee-reverse"><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span><span>Code</span><span>Camera</span><span>Design</span></div>
+</div>
 
 <section id="work">
     <div class="gallery-header">
