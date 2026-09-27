@@ -1109,20 +1109,6 @@ button:focus-visible,
     .nav.open a:nth-child(1){transition-delay:0.2s}
     .nav.open a:nth-child(2){transition-delay:0.32s}
     .nav.open a:nth-child(3){transition-delay:0.44s}
-    .nav-footer{
-        position:absolute;
-        bottom:calc(env(safe-area-inset-bottom, 0px) + 3rem);
-        left:3rem;
-        right:3rem;
-        font-size:0.68rem;
-        letter-spacing:0.03em;
-        color:var(--muted);
-        opacity:0;
-        word-break:break-all;
-        transform:translateY(16px);
-        transition:opacity 0.6s var(--ease) 0.56s, transform 0.6s var(--ease) 0.56s;
-    }
-    .nav.open .nav-footer{opacity:1;transform:translateY(0)}
 }
 
 @media (hover:none), (pointer:coarse){
@@ -1177,7 +1163,6 @@ button:focus-visible,
         <a href="#about" data-index="01" class="magnetic">About</a>
         <a href="#work" data-index="02" class="magnetic">Work</a>
         <a href="#contact" data-index="03" class="magnetic">Contact</a>
-        <div class="nav-footer">000danielwilds@gmail.com</div>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
@@ -1351,7 +1336,7 @@ button:focus-visible,
     <div class="contact-container">
         <span class="section-tag">Contact</span>
         <h2 class="section-title">Let&rsquo;s Build Something</h2>
-        <a href="mailto:000danielwilds@gmail.com" class="contact-email magnetic">000danielwilds@gmail.com</a>
+        <a href="mailto:000danielwilds@gmail.com" class="contact-email magnetic">Email Me</a>
     </div>
 </section>
 
